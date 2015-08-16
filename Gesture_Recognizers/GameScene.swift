@@ -15,6 +15,7 @@ enum BodyType:UInt32 {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
   
    //Actions Varables
     var seq:SKAction?
@@ -29,8 +30,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Actions Varables End
     
     //Sprite Varables
-    var ship:SKSpriteNode?
-    var target:SKSpriteNode?
+    var progress:Float = 500.00
+    var HealthBar:SKSpriteNode?
+    var ship = SKSpriteNode(imageNamed:"Ship")
+    var target = SKSpriteNode(imageNamed:"target")
+    var skull:SKSpriteNode?
     //Sprite Varables End
 
 
@@ -70,17 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.anchorPoint = CGPointMake(0.0, 0.0)
         self.backgroundColor = SKColor.blackColor()
         
-        //Skull
-        let skull = SKSpriteNode(imageNamed: "skull")
-        //var mySize = CGSize(skull.size.height/2)
-        skull.physicsBody = SKPhysicsBody(texture: skull.texture, size: CGSizeMake(skull.size.width - 10, skull.size.height - 10))
-        skull.physicsBody?.dynamic = false
-        skull.physicsBody?.categoryBitMask = BodyType.monster.rawValue
-        skull.position = CGPointMake((self.view!.bounds.width / 2), (self.view!.bounds.height / 2))
-        self.addChild(skull)
-        
         let xOffset:CGFloat = 100
-        
         
         //path that skulls follow
         let path = CGPathCreateMutable()
@@ -120,7 +114,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         repeat = SKAction.repeatActionForever(seq!)
         
-        skull.runAction(repeat!)
+        //skull!.runAction(repeat!)
         //skull path End
         
       ///uncomment to see lines for skull path
@@ -146,26 +140,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Skull End
         
         //handling Ship Sprite
-        ship = SKSpriteNode(imageNamed:"Ship")
-        ship!.physicsBody = SKPhysicsBody(texture: ship!.texture, size: ship!.size)
-        ship!.physicsBody?.dynamic = true
-        ship!.physicsBody?.categoryBitMask = BodyType.player.rawValue
-        //ship!.physicsBody?.collisionBitMask = BodyType.monster.rawValue
-        ship!.physicsBody?.collisionBitMask = 0
-        ship?.physicsBody?.contactTestBitMask = BodyType.monster.rawValue
-        ship!.physicsBody?.affectedByGravity = false
-        //ship?.physicsBody = SKPhysicsBody.
-        ship!.position = CGPointMake((self.view!.bounds.width / 2), (self.view!.bounds.height / 2) - 250)
-        addChild(ship!)
+        
+        ship.physicsBody = SKPhysicsBody(texture: ship.texture, size: ship.size)
+        ship.physicsBody?.dynamic = true
+        ship.physicsBody?.categoryBitMask = BodyType.player.rawValue
+        ship.physicsBody?.collisionBitMask = BodyType.monster.rawValue
+        ship.physicsBody?.collisionBitMask = 1
+        ship.physicsBody?.contactTestBitMask = BodyType.monster.rawValue
+        ship.physicsBody?.affectedByGravity = false
+        ship.position = CGPointMake((self.view!.bounds.width / 2), (self.view!.bounds.height / 2) - 250)
+        addChild(ship)
         //Ship End
         
+        //HealthBar
+        HealthBar = SKSpriteNode(color:SKColor .yellowColor(), size: CGSize(width: CGFloat(progress), height: 30))
+        HealthBar!.position = CGPointMake(self.frame.size.width / 3, self.frame.size.height / 1.05)
+        HealthBar!.anchorPoint = CGPointMake(0.0, 0.5)
+        HealthBar!.zPosition = 4
+        self.addChild(HealthBar!)
+        //HealthBar End
         
         //Handles target Sprite
-        target = SKSpriteNode(imageNamed:"target")
-        addChild(target!)
+        addChild(target)
         
-        target!.position = CGPointMake(ship!.position.x, ship!.position.y + length)
-        target!.alpha = 0
+        target.position = CGPointMake(ship.position.x, ship.position.y + length)
+        target.alpha = 0
         //target End
         
         setUpAnimation()
@@ -222,8 +221,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //functions for detecting contact
     func didBeginContact(contact: SKPhysicsContact) {
         
-        //this gets called automactically when to objects begin contact with one another
+
         
+        //this gets called automactically when to objects begin contact with one another
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         let SoundEffect:SKAction = SKAction.playSoundFileNamed("Hit.mp3", waitForCompletion: false)
         
@@ -232,8 +232,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case BodyType.player.rawValue | BodyType.monster.rawValue:
             //either the conteckmask was the player or monster
             println("contact made")
+            ship.runAction(SoundEffect)
+            removeHealth()
             
-            ship!.runAction(SoundEffect)
+            if HealthBar!.size.width == 0 || HealthBar!.size.width < 0  {
+                
+                //let myTimer : NSTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("endGame"), userInfo: nil, repeats: false)
+                endGame()
+            }
+            
             
             
         default:
@@ -250,18 +257,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //function that creates new Skulls
     func newSkull() {
+        skull = SKSpriteNode(imageNamed: "skull")
+        skull!.physicsBody = SKPhysicsBody(texture: skull!.texture, size: CGSizeMake(skull!.size.width - 10, skull!.size.height - 10))
+      skull!.physicsBody?.dynamic = false
+       skull!.physicsBody?.categoryBitMask = BodyType.monster.rawValue
+        skull!.position = CGPointMake(0,0)
+        self.addChild(skull!)
         
-        let skull = SKSpriteNode(imageNamed: "skull")
-        skull.physicsBody = SKPhysicsBody(texture: skull.texture, size: CGSizeMake(skull.size.width - 10, skull.size.height - 10))
-        skull.physicsBody?.dynamic = false
-        skull.physicsBody?.categoryBitMask = BodyType.monster.rawValue
-        skull.position = CGPointMake(0,0)
-        self.addChild(skull)
-        
-        skull.runAction(repeat!)
+        skull!.runAction(repeat!)
     }
     //function that creates new Skulls End
     
+    //removes skulls
+    func endGame(){
+        self.removeAllChildren()
+        self.removeAllActions()
+        let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+        let scene = GameOverScene(size: self.size)
+        self.view?.presentScene(scene, transition: reveal)
+    }
+    //remove skulls end
+    
+    //reomoveHealth
+    
+    func removeHealth(){
+        
+        progress = progress - 0.5
+        
+        if progress >= 0 {
+            
+            HealthBar!.size = CGSize(width: CGFloat(progress), height: 30)
+        }else{
+            
+            HealthBar!.size = CGSize(width: 0, height: 30)
+        }
+        
+        
+        println(progress)
+    }
+
+    //removeHealth End
 
     //handels Gestures functions
     func longPress(){
@@ -271,8 +306,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func pinch(sender:UIPinchGestureRecognizer){
         
-        ship!.xScale = sender.scale
-        ship!.yScale = sender.scale
+        ship.xScale = sender.scale
+        ship.yScale = sender.scale
         
         println("Pinched velocity \(sender.velocity)")
     }
@@ -284,7 +319,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var touchLocation:CGPoint = sender.locationInView(self.view!)
         touchLocation = self.convertPointFromView(touchLocation)
         
-        ship!.position = touchLocation
+        ship.position = touchLocation
         
         println("X \(touchLocation.x)")
         println("Y \(touchLocation.y)")
@@ -294,9 +329,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         println("swiped Right")
         
-        ship!.zRotation = CGFloat (DegreesToRadians(270))
-        offset = ship!.zRotation
-        target!.alpha = 0
+        ship.zRotation = CGFloat (DegreesToRadians(270))
+        offset = ship.zRotation
+        target.alpha = 0
        
         
     }
@@ -305,26 +340,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         println("swiped Left")
         
-        ship!.zRotation = CGFloat (DegreesToRadians(90))
-        offset = ship!.zRotation
-        target!.alpha = 0
+        ship.zRotation = CGFloat (DegreesToRadians(90))
+        offset = ship.zRotation
+        target.alpha = 0
     }
     
     func swipedUp(){
         
         println("swiped Up")
-        ship!.zRotation = CGFloat (DegreesToRadians(0))
-        offset = ship!.zRotation
-        target!.alpha = 0
+        ship.zRotation = CGFloat (DegreesToRadians(0))
+        offset = ship.zRotation
+        target.alpha = 0
         
     }
     
     func swipedDown(){
         
         println("swiped Down")
-        ship!.zRotation = CGFloat (DegreesToRadians(180))
-        offset = ship!.zRotation
-        target!.alpha = 0
+        ship.zRotation = CGFloat (DegreesToRadians(180))
+        offset = ship.zRotation
+        target.alpha = 0
         
     }
     
@@ -336,7 +371,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //do anything you want when the rotation gesture has begun
             
             let fade:SKAction = SKAction.fadeAlphaTo(1, duration: 0.5)
-            target!.runAction(fade)
+            target.runAction(fade)
             
             println("we done Started")
         }
@@ -348,13 +383,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             theRotation = CGFloat(sender.rotation) + self.offset
             theRotation = theRotation * -1
             
-            ship!.zRotation = theRotation
-            target?.zRotation = theRotation
+            ship.zRotation = theRotation
+            target.zRotation = theRotation
             
             let xDistance:CGFloat = sin(theRotation) * length
             let yDistance:CGFloat = cos(theRotation) * length
             
-            target!.position = CGPointMake(ship!.position.x - xDistance, ship!.position.y + yDistance)
+            target.position = CGPointMake(ship.position.x - xDistance, ship.position.y + yDistance)
             
             println("we done rotated")
         }
@@ -375,18 +410,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         println("we done tapped")
         
         let fade:SKAction = SKAction.fadeAlphaTo(0, duration: 0.5)
-        target!.runAction(fade)
+        target.runAction(fade)
         
-        let move:SKAction = SKAction.moveTo(target!.position, duration: 0.6)
+        let move:SKAction = SKAction.moveTo(target.position, duration: 0.6)
         move.timingMode = .EaseOut
         
         let SoundEffect:SKAction = SKAction.playSoundFileNamed("Thrusters2.mp3", waitForCompletion: false)
         
-        ship!.runAction(move)
+        ship.runAction(move)
         
-        ship!.runAction(movingAnimation)
+        ship.runAction(movingAnimation)
         
-        ship!.runAction(SoundEffect)
+        ship.runAction(SoundEffect)
     }
     
     func removeGestures(){
