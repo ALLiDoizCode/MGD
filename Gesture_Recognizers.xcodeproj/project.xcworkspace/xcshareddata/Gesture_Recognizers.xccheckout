@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>20005B59-3828-4740-BA09-796795E6309C</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Gesture_Recognizers</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>AA9DCEB2A341660E370A3D4F82DC744DF3BE94E7</key>
 		<string>https://github.com/b20160/MGD.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Gesture_Recognizers.xcodeproj/project.xcworkspace</string>
+	<string>Gesture_Recognizers.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>AA9DCEB2A341660E370A3D4F82DC744DF3BE94E7</key>
