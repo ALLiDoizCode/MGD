@@ -16,6 +16,7 @@
 		6886BB241B71654D007AE1C7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6886BB221B71654D007AE1C7 /* LaunchScreen.xib */; };
 		6886BB301B71654D007AE1C7 /* Gesture_RecognizersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886BB2F1B71654D007AE1C7 /* Gesture_RecognizersTests.swift */; };
 		6886BB3A1B716559007AE1C7 /* Ship.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6886BB391B716559007AE1C7 /* Ship.atlas */; };
+		68A709851B9287E800272CE7 /* credit.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68A709841B9287E800272CE7 /* credit.jpg */; };
 		68BAE5081B73E1EF00755AFB /* Thrusters2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68BAE5071B73E1EF00755AFB /* Thrusters2.mp3 */; };
 		68BAE50C1B73EA5E00755AFB /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68BAE50B1B73EA5E00755AFB /* bg.jpg */; };
 		68BAE50E1B73ED9B00755AFB /* Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68BAE50D1B73ED9B00755AFB /* Hit.mp3 */; };
@@ -49,6 +50,7 @@
 		6886BB2E1B71654D007AE1C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6886BB2F1B71654D007AE1C7 /* Gesture_RecognizersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture_RecognizersTests.swift; sourceTree = "<group>"; };
 		6886BB391B716559007AE1C7 /* Ship.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Ship.atlas; sourceTree = "<group>"; };
+		68A709841B9287E800272CE7 /* credit.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = credit.jpg; sourceTree = "<group>"; };
 		68BAE5071B73E1EF00755AFB /* Thrusters2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Thrusters2.mp3; sourceTree = "<group>"; };
 		68BAE50B1B73EA5E00755AFB /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		68BAE50D1B73ED9B00755AFB /* Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Hit.mp3; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				6886BB191B71654D007AE1C7 /* GameScene.swift */,
 				6886BB1B1B71654D007AE1C7 /* GameViewController.swift */,
 				6886BB1D1B71654D007AE1C7 /* Main.storyboard */,
+				68A709841B9287E800272CE7 /* credit.jpg */,
 				6886BB201B71654D007AE1C7 /* Images.xcassets */,
 				68C3A5511B8703B300FCB103 /* explosion.atlas */,
 				6886BB391B716559007AE1C7 /* Ship.atlas */,
@@ -222,6 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68A709851B9287E800272CE7 /* credit.jpg in Resources */,
 				6886BB241B71654D007AE1C7 /* LaunchScreen.xib in Resources */,
 				6886BB211B71654D007AE1C7 /* Images.xcassets in Resources */,
 				68BAE50E1B73ED9B00755AFB /* Hit.mp3 in Resources */,
